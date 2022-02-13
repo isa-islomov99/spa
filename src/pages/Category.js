@@ -6,7 +6,6 @@ import MealList from "../components/MealList";
 
 const Category = () => {
   const { name } = useParams();
-
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
