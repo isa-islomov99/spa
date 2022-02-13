@@ -9,9 +9,8 @@ const Home = () => {
   const [category, setCategory] = useState([]);
   const [filterCategory, setfilterCategory] = useState([]);
 
-  const location = useLocation();
+  const { search, pathname } = useLocation();
   const navigate = useNavigate();
-  console.log(location);
 
   const handleSearch = (str) => {
     setfilterCategory(
@@ -20,7 +19,7 @@ const Home = () => {
       )
     );
     navigate({
-      pathname: location.pathname,
+      pathname: pathname,
       search: `?search=${str}`,
     });
   };
@@ -28,9 +27,19 @@ const Home = () => {
   useEffect(() => {
     getAllCategories().then((data) => {
       setCategory(data.categories);
-      setfilterCategory(data.categories);
+      setfilterCategory(
+        search
+          ? data.categories.filter((list) =>
+              list.strCategory
+                .toLowerCase()
+                .includes(search.split("=")[1].toLocaleLowerCase())
+            )
+          : data.categories
+      );
     });
-  }, []);
+
+    if (search && !filterCategory.length) navigate("/NotFound");
+  }, [search]);
 
   return (
     <div>
