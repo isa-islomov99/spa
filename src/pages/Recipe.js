@@ -38,7 +38,7 @@ const Recipe = () => {
             style={{ margin: "0.5rem 0" }}
             onClick={() => setShowRecipe((prev) => !prev)}
           >
-            Show Recipe
+            {!showRecipe ? 'Show Recipe' : 'Hide Recipe'}
           </button>
 
           {showRecipe ? (
